@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Map.txt" />
+    <Text Include="Map_easy.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

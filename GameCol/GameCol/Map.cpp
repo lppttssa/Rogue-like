@@ -3,7 +3,7 @@
 
 Map::Map() {};
 
-void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight) {
+void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight, std::vector<std::shared_ptr<Character>>& enemies) {
 	std::ifstream file;
 
 	file.open(m);
@@ -28,6 +28,11 @@ void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight) {
 				break;
 			case 'P':
 				map[count].push_back(std::dynamic_pointer_cast<GameObject>(std::make_shared<Princess>(Princess())));
+				break;
+			case 'z':
+				enemies.push_back(std::make_shared<Enemy>(Enemy(6, 3, 'z', { i, count })));
+				map[count].push_back(std::dynamic_pointer_cast<GameObject>(enemies.back()));
+				break;
 			}	
 		}
 		count++;

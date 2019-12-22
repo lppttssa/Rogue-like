@@ -4,10 +4,10 @@
 class Wall : public GameObject {
 public:
 	Wall();
-	//bool Collision(Knight &knight) override;
-	bool Collision(Wall& wall) override;
-	bool Collision(GameObject& gameObj) override;
-	bool Collision(EmptySpace& emptySpace) override;
-	bool Collision(Knight& knight) override;
-	bool Collision(Princess& princess) override;
+	int Collision(Enemy& enemy) override;
+	int Collision(Wall& wall) override;
+	int Collision(GameObject& gameObj) override;
+	int Collision(EmptySpace& emptySpace) override;
+	int Collision(Knight& knight) override;
+	int Collision(Princess& princess) override;
 };

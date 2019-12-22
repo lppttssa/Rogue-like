@@ -2,22 +2,26 @@
 
 Wall::Wall() : GameObject('#') {};
 
-bool Wall::Collision(Wall &wall) {
-	return false;
+int Wall::Collision(Wall &wall) {
+	return 0;
 }
 
-bool Wall::Collision(GameObject& gameObj) {
+int Wall::Collision(GameObject& gameObj) {
 	return gameObj.Collision(*this);
 }
 
-bool Wall::Collision(EmptySpace& emptySpace) {
-	return false;
+int Wall::Collision(EmptySpace& emptySpace) {
+	return 0;
 }
 
-bool Wall::Collision(Knight& knight) {
-	return false;
+int Wall::Collision(Knight& knight) {
+	return 0;
 }
 
-bool Wall::Collision(Princess& princess) {
-	return false;
+int Wall::Collision(Princess& princess) {
+	return 0;
+}
+
+int Wall::Collision(Enemy& enemy) {
+	return 0;
 }

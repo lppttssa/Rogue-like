@@ -2,26 +2,26 @@
 
 Knight::Knight(int hp, int damage, char sym, std::pair<int, int> c) : Character(hp, damage, sym, c) {}
 
-bool Knight::Collision(Wall& wall) {
-	return false;
+int Knight::Collision(Wall& wall) {
+	return 0;
 }
 
-bool Knight::Collision(GameObject& gameObj) {
+int Knight::Collision(GameObject& gameObj) {
 	return gameObj.Collision(*this);
 }
 
-bool Knight::Collision(EmptySpace& emptySpace) {
-	return false;
+int Knight::Collision(EmptySpace& emptySpace) {
+	return 1;
 }
 
-bool Knight::Collision(Knight& knight) {
-	return true;
+int Knight::Collision(Knight& knight) {
+	return 1;
 }
 
-bool Knight::Collision(Princess& princess) {
+int Knight::Collision(Princess& princess) {
 	clear();
 	while (true) {
-		printw("LOSER");
+		printw("WINNER");
 		refresh();
 	}
 }

@@ -11,3 +11,4 @@ char GameObject::GetSym() {
 void GameObject::SetSym(char s) {
 	sym = s;
 }
+

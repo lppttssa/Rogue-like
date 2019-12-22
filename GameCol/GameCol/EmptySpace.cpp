@@ -2,22 +2,26 @@
 
 EmptySpace::EmptySpace() : GameObject('.') {};
 
-bool EmptySpace::Collision(Wall& wall) {
-	return false;
+int EmptySpace::Collision(Wall& wall) {
+	return 0;
 }
 
-bool EmptySpace::Collision(GameObject& gameObj) {
+int EmptySpace::Collision(GameObject& gameObj) {
 	return gameObj.Collision(*this);
 }
 
-bool EmptySpace::Collision(EmptySpace& emptySpace) {
-	return false;
+int EmptySpace::Collision(EmptySpace& emptySpace) {
+	return 0;
 }
 
-bool EmptySpace::Collision(Knight& knight) {
-	return true;
+int EmptySpace::Collision(Knight& knight) {
+	return 1;
 }
 
-bool EmptySpace::Collision(Princess& princess) {
-	return false;
+int EmptySpace::Collision(Princess& princess) {
+	return 0;
+}
+
+int EmptySpace::Collision(Enemy& enemy) {
+	return 1;
 }

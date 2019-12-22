@@ -2,19 +2,19 @@
 
 Princess::Princess() : GameObject('P') {};
 
-bool Princess::Collision(Wall& wall) {
-	return false;
+int Princess::Collision(Wall& wall) {
+	return 0;
 }
 
-bool Princess::Collision(GameObject& gameObj) {
+int Princess::Collision(GameObject& gameObj) {
 	return gameObj.Collision(*this);
 }
 
-bool Princess::Collision(EmptySpace& emptySpace) {
-	return false;
+int Princess::Collision(EmptySpace& emptySpace) {
+	return 0;
 }
 
-bool Princess::Collision(Knight& knight) {
+int Princess::Collision(Knight& knight) {
 	clear();
 	while (true) {
 		printw("WINNER");
@@ -22,6 +22,10 @@ bool Princess::Collision(Knight& knight) {
 	}
 }
 
-bool Princess::Collision(Princess& princess) {
-	return false;
+int Princess::Collision(Princess& princess) {
+	return 0;
+}
+
+int Princess::Collision(Enemy& enemy) {
+	return 0;
 }

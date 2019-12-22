@@ -77,5 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Map.txt" />
+    <Text Include="Map_easy.txt" />
   </ItemGroup>
 </Project>
