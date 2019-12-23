@@ -5,6 +5,7 @@ class EmptySpace;
 class Knight;
 class Enemy;
 class Princess;
+class Fireball;
 class GameObject {
 	char sym;
 public:

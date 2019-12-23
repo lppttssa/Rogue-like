@@ -90,7 +90,7 @@ void Game::TryMove(std::shared_ptr<Character>& character, std::pair<int, int> ne
 		mvaddch(new_pos.second, new_pos.first, charToMove->GetSym());
 
 	}
-	else if (way == 2){ //knight vs zombie
+	else if (way == 2){ //knight eats zombie and goes to zombie pos
 		map.ChangeMap(old_pos.first, old_pos.second, std::dynamic_pointer_cast<GameObject>(std::make_shared<EmptySpace>(EmptySpace()))); //сюда просто пустое место
 		for (auto i = enemies.begin(); i != enemies.end(); i++) {
 			if (i->first == charToButtle) {
@@ -103,14 +103,20 @@ void Game::TryMove(std::shared_ptr<Character>& character, std::pair<int, int> ne
 		map.ChangeMap(new_pos.first, new_pos.second, charToMove);
 		mvaddch(new_pos.second, new_pos.first, charToMove->GetSym());
 	}
-	else if (way == 3) {
+	else if (way == 3) { //zombie goes to knight and knight kill zombie and stays on his position
 		map.ChangeMap(old_pos.first, old_pos.second, std::dynamic_pointer_cast<GameObject>(std::make_shared<EmptySpace>(EmptySpace()))); //сюда просто пустое место
-		for (auto i = enemies.begin(); i != enemies.end(); i++) {
-			if (i->first == charToMove) {
-				i->second = false;
-			}
+		if (charToMove->GetSym() == 'z') {
+			ChangeEnemies(charToMove);
 		}
 		mvaddch(old_pos.second, old_pos.first, '.');
 	}
 	refresh();
+}
+
+void Game::ChangeEnemies(std::shared_ptr<GameObject> charToMove) {
+	for (auto i = enemies.begin(); i != enemies.end(); i++) {
+		if (i->first == charToMove) {
+			i->second = false;
+		}
+	}
 }

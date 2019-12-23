@@ -28,6 +28,7 @@ int Enemy::Collision(Knight& knight) {
 			return 2;
 		}
 	}
+	return 0;
 }
 
 int Knight::Collision(Enemy& enemy) {
@@ -43,6 +44,7 @@ int Knight::Collision(Enemy& enemy) {
 			return 3;
 		}
 	}
+	return 0;
 }
 
 int Enemy::Collision(Princess& princess) {

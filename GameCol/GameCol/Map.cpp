@@ -33,6 +33,10 @@ void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight, std::vec
 				enemies.push_back(std::make_pair(std::make_shared<Enemy>(Enemy(6, 3, 'z', { i, count })), true));
 				map[count].push_back(std::dynamic_pointer_cast<GameObject>(enemies.back().first));
 				break;
+			case 'd':
+				enemies.push_back(std::make_pair(std::make_shared<Enemy>(Enemy(10, 5, 'd', { i, count })), true));
+				map[count].push_back(std::dynamic_pointer_cast<GameObject>(enemies.back().first));
+				break;
 			}	
 		}
 		count++;

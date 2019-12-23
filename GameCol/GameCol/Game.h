@@ -17,4 +17,5 @@ public:
 	void MoveInDirection(std::shared_ptr<Character>&, char);
 	void TryMove(std::shared_ptr<Character>&, std::pair<int, int>, std::pair<int, int>);
 	char GetRandomMonsterMove();
+	void ChangeEnemies(std::shared_ptr<GameObject>);
 };
