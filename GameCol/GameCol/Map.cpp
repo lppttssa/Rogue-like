@@ -3,7 +3,7 @@
 
 Map::Map() {};
 
-void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight, std::vector<std::shared_ptr<Character>>& enemies) {
+void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight, std::vector<std::pair<std::shared_ptr<Character>, bool>>& enemies) {
 	std::ifstream file;
 
 	file.open(m);
@@ -30,8 +30,8 @@ void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight, std::vec
 				map[count].push_back(std::dynamic_pointer_cast<GameObject>(std::make_shared<Princess>(Princess())));
 				break;
 			case 'z':
-				enemies.push_back(std::make_shared<Enemy>(Enemy(6, 3, 'z', { i, count })));
-				map[count].push_back(std::dynamic_pointer_cast<GameObject>(enemies.back()));
+				enemies.push_back(std::make_pair(std::make_shared<Enemy>(Enemy(6, 3, 'z', { i, count })), true));
+				map[count].push_back(std::dynamic_pointer_cast<GameObject>(enemies.back().first));
 				break;
 			}	
 		}
@@ -48,11 +48,7 @@ void Map::Print() {
 		}
 		printw("\n");
 	}
-	refresh();               //print any changes done to the standard screen
-
-	echo();
-	getch();                 //Wait for user input
-	endwin();
+	refresh();             
 }
 
 std::shared_ptr<GameObject> Map::GetObject(int x, int y) {

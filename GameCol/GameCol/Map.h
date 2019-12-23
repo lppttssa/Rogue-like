@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <map>
 #include "GameObject.h"
 #include "Wall.h"
 #include "EmptySpace.h"
@@ -18,7 +19,7 @@ class Map {
 public:
 	Map();
 
-	void CreateGame(std::string, std::shared_ptr<Character>&, std::vector<std::shared_ptr<Character>>&);
+	void CreateGame(std::string, std::shared_ptr<Character>&, std::vector<std::pair<std::shared_ptr<Character>, bool>>&);
 	void Print();
 	std::shared_ptr<GameObject> GetObject(int, int);
 	void ChangeMap(int, int, std::shared_ptr<GameObject>);
