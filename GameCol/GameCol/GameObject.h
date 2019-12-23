@@ -17,6 +17,7 @@ public:
 	virtual int Collision(Wall& wall) = 0;
 	virtual int Collision(Knight& knight) = 0;
 	virtual int Collision(Princess& princess) = 0;
+	virtual int Collision(Fireball& fireball) = 0;
 
 	char GetSym();
 	void SetSym(char s);

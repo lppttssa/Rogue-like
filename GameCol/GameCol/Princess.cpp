@@ -29,3 +29,7 @@ int Princess::Collision(Princess& princess) {
 int Princess::Collision(Enemy& enemy) {
 	return 0;
 }
+
+int Princess::Collision(Fireball& fireball) {
+	return 0;
+}

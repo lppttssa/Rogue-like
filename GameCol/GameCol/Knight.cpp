@@ -25,3 +25,7 @@ int Knight::Collision(Princess& princess) {
 		refresh();
 	}
 }
+
+int Knight::Collision(Fireball& fireball) {
+	return 0;
+}

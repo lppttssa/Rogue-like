@@ -54,3 +54,7 @@ int Enemy::Collision(Princess& princess) {
 int Enemy::Collision(Enemy& enemy) {
 	return 0;
 }
+
+int Enemy::Collision(Fireball& fireball) {
+	return 0;
+}

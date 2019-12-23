@@ -25,3 +25,7 @@ int Wall::Collision(Princess& princess) {
 int Wall::Collision(Enemy& enemy) {
 	return 0;
 }
+
+int Wall::Collision(Fireball& fireball) {
+	return 3;
+}

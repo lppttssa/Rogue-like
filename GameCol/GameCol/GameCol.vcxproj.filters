@@ -42,6 +42,9 @@
     <ClInclude Include="Princess.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Fireball.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,9 +77,13 @@
     <ClCompile Include="Princess.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Fireball.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Map.txt" />
     <Text Include="Map_easy.txt" />
+    <Text Include="simple.txt" />
   </ItemGroup>
 </Project>

@@ -25,3 +25,7 @@ int EmptySpace::Collision(Princess& princess) {
 int EmptySpace::Collision(Enemy& enemy) {
 	return 1;
 }
+
+int EmptySpace::Collision(Fireball& fireball) {
+	return 1;
+}

@@ -11,6 +11,7 @@ void Game::Play() {
 	while (true) {
 		Move();
 		MoveMonster();
+		MoveFireballs();
 	}
 }
 
@@ -20,6 +21,9 @@ void Game::Move() {
 	char move;
 	if ((move = getch()) == ERR) {
 		move = 'n';
+	}
+	else if (move != 'e'){
+		knightRotation = move;
 	}
 	MoveInDirection(knight, move);
 }
@@ -36,6 +40,20 @@ void Game::MoveMonster() {
 	for (auto i = enemies.begin(); i != enemies.end(); i++) {
 		char move = GetRandomMonsterMove();
 		MoveInDirection(i->first, move);
+	}
+}
+
+void Game::MoveFireballs() {
+	int i = 0;
+	for (i; i < fireballs.size(); i++) {
+		if (!fireballs[i].second) {
+			fireballs[i] = fireballs.back();
+			fireballs.pop_back();
+			i--;
+		}
+	}
+	for (auto i = fireballs.begin(); i != fireballs.end(); i++) {
+		MoveInDirection(i->first, std::dynamic_pointer_cast<Fireball>(i->first)->GetDir());//надо понять,куда идти фаерболлом
 	}
 }
 
@@ -58,6 +76,7 @@ char Game::GetRandomMonsterMove() {
 }
 
 void Game::MoveInDirection(std::shared_ptr<Character> &character, char direction) {
+	std::pair<int, int> fireballPlace = { 0,0 };
 	std::pair<int, int> place = character->GetPos();
 	switch (direction) {
 	case 'w':
@@ -72,8 +91,18 @@ void Game::MoveInDirection(std::shared_ptr<Character> &character, char direction
 	case 'd':
 		TryMove(character, std::make_pair(place.first + 1, place.second), place);
 		break;
+	case 'e':
+		fireballPlace = GetFireballPos();//надо добавить для шара направление
+		if (std::make_pair(std::make_shared<Fireball>(Fireball(1, 2, '^', fireballPlace, knightRotation)), true).first->
+			Collision(*map.GetObject(fireballPlace.first, fireballPlace.second).get())) {
+			fireballs.push_back(std::make_pair(std::make_shared<Fireball>(Fireball(1, 2, '^', fireballPlace, knightRotation)), true));
+			map.ChangeMap(fireballPlace.first, fireballPlace.second, fireballs.back().first);
+			mvaddch(fireballPlace.second, fireballPlace.first, '^');
+		}
+		break;
 	default:
 		printf("NO");
+		break;
 	}
 }
 
@@ -108,6 +137,9 @@ void Game::TryMove(std::shared_ptr<Character>& character, std::pair<int, int> ne
 		if (charToMove->GetSym() == 'z') {
 			ChangeEnemies(charToMove);
 		}
+		else {
+			ChangeFireballs(charToMove);
+		}
 		mvaddch(old_pos.second, old_pos.first, '.');
 	}
 	refresh();
@@ -118,5 +150,27 @@ void Game::ChangeEnemies(std::shared_ptr<GameObject> charToMove) {
 		if (i->first == charToMove) {
 			i->second = false;
 		}
+	}
+}
+
+void Game::ChangeFireballs(std::shared_ptr<GameObject> charToMove) {
+	for (auto i = fireballs.begin(); i != fireballs.end(); i++) {
+		if (i->first == charToMove) {
+			i->second = false;
+		}
+	}
+}
+
+std::pair<int, int> Game::GetFireballPos() {
+	auto place = knight->GetPos();
+	switch (knightRotation) {
+	case 'w':
+		return std::make_pair(place.first, place.second - 1);
+	case 's':
+		return std::make_pair(place.first, place.second + 1);
+	case 'a':
+		return std::make_pair(place.first - 1, place.second);
+	case 'd':
+		return std::make_pair(place.first + 1, place.second);
 	}
 }

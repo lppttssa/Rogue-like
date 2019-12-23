@@ -10,6 +10,7 @@
 #include "Knight.h"
 #include "Princess.h"
 #include "Enemy.h"
+#include "Fireball.h"
 #include "curses.h"
 
 class Map {

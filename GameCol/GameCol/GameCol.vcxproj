@@ -141,6 +141,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="EmptySpace.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Fireball.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Knight.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="EmptySpace.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Knight.cpp" />
@@ -163,6 +165,7 @@
   <ItemGroup>
     <Text Include="Map.txt" />
     <Text Include="Map_easy.txt" />
+    <Text Include="simple.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
