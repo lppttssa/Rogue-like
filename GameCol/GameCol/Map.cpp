@@ -37,6 +37,7 @@ void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight, std::vec
 		}
 		count++;
 	}
+	
 }
 
 void Map::Print() {

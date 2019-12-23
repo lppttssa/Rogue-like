@@ -21,9 +21,10 @@ void Game::Move() {
 }
 
 void Game::MoveMonster() {
-	for (int i = 0; i < enemies.size(); i++) {
-		char move = GetRandomMonsterMove();
-		MoveInDirection(enemies[i], move);
+	int i;
+	for (i = 0; i < enemies.size(); i++) {
+		//char move = GetRandomMonsterMove();
+		MoveInDirection(enemies[i], 'a',  i);
 	}
 }
 
@@ -45,27 +46,27 @@ char Game::GetRandomMonsterMove() {
 	}
 }
 
-void Game::MoveInDirection(std::shared_ptr<Character> &character, char direction) {
+void Game::MoveInDirection(std::shared_ptr<Character> &character, char direction, int i) {
 	std::pair<int, int> place = character->GetPos();
 	switch (direction) {
 	case 'w':
-		TryMove(character, std::make_pair(place.first, place.second - 1), place);
+		TryMove(character, std::make_pair(place.first, place.second - 1), place, i);
 		break;
 	case 's':
-		TryMove(character, std::make_pair(place.first, place.second + 1), place);
+		TryMove(character, std::make_pair(place.first, place.second + 1), place, i);
 		break;
 	case 'a':
-		TryMove(character, std::make_pair(place.first - 1, place.second), place);
+		TryMove(character, std::make_pair(place.first - 1, place.second), place, i);
 		break;
 	case 'd':
-		TryMove(character, std::make_pair(place.first + 1, place.second), place);
+		TryMove(character, std::make_pair(place.first + 1, place.second), place, i);
 		break;
 	default:
 		printf("NO");
 	}
 }
 
-void Game::TryMove(std::shared_ptr<Character>& character, std::pair<int, int> new_pos, std::pair<int, int> old_pos) {
+void Game::TryMove(std::shared_ptr<Character>& character, std::pair<int, int> new_pos, std::pair<int, int> old_pos, int i) {
 	std::shared_ptr<GameObject> charToMove = map.GetObject(old_pos.first, old_pos.second);
 	std::shared_ptr<GameObject> charToButtle = map.GetObject(new_pos.first, new_pos.second);
 	auto way = charToMove->Collision(*charToButtle.get());
@@ -77,14 +78,20 @@ void Game::TryMove(std::shared_ptr<Character>& character, std::pair<int, int> ne
 		map.ChangeMap(new_pos.first, new_pos.second, charToMove);
 		mvaddch(new_pos.second, new_pos.first, charToMove->GetSym());
 
-		refresh();
 	}
-	else if (way == 2){
+	else if (way == 2){ //knight vs zombie
 		map.ChangeMap(old_pos.first, old_pos.second, std::dynamic_pointer_cast<GameObject>(std::make_shared<EmptySpace>(EmptySpace()))); //сюда просто пустое место
+		//enemies.erase(enemies.begin() + i);
 		mvaddch(old_pos.second, old_pos.first, '.');
 		character->SetPos(new_pos.first, new_pos.second);
 
 		map.ChangeMap(new_pos.first, new_pos.second, charToMove);
 		mvaddch(new_pos.second, new_pos.first, charToMove->GetSym());
 	}
+	else if (way == 3) {
+		map.ChangeMap(old_pos.first, old_pos.second, std::dynamic_pointer_cast<GameObject>(std::make_shared<EmptySpace>(EmptySpace()))); //сюда просто пустое место
+		enemies.erase(enemies.begin() + i);
+		mvaddch(old_pos.second, old_pos.first, '.');
+	}
+	refresh();
 }

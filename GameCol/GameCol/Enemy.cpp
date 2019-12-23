@@ -40,7 +40,7 @@ int Knight::Collision(Enemy& enemy) {
 	}
 	else {
 		if (enemy.KillCharacter(GetDamage())) {
-			return 2;
+			return 3;
 		}
 	}
 }
