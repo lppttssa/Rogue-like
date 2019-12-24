@@ -15,6 +15,7 @@ class Game {
 	void MoveFireballs();
 	void ChangeFireballs(std::shared_ptr<GameObject>);
 	void ChangeEnemies(std::shared_ptr<GameObject>);
+	void ChangeDanger(std::shared_ptr<GameObject>, std::shared_ptr<GameObject>);
 public:
 	Game(std::string);
 	void Play();

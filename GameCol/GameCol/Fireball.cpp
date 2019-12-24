@@ -23,10 +23,6 @@ int Fireball::Collision(Princess& princess) {
 	return 0;
 }
 
-int Fireball::Collision(Enemy& enemy) {
-	return 0;
-}
-
 int Fireball::Collision(Fireball& fireball) {
 	return 0;
 }

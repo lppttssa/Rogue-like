@@ -31,5 +31,5 @@ int Princess::Collision(Enemy& enemy) {
 }
 
 int Princess::Collision(Fireball& fireball) {
-	return 0;
+	return 3;
 }

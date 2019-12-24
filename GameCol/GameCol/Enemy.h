@@ -4,6 +4,7 @@
 #include "Character.h"
 
 class Knight;
+class Fireball;
 class Enemy : public Character {
 public:
 	Enemy(int hp, int damage, char sym, std::pair<int, int> c);

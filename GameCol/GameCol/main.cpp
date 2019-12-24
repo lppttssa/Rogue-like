@@ -1,6 +1,6 @@
 #include "Game.h"
 
 int main(){
-	Game game("simple.txt");
+	Game game("Map.txt");
 	game.Play();
 }

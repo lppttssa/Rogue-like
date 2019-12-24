@@ -2,7 +2,7 @@
 #include <time.h>
 #include "Game.h"
 
-Game::Game(std::string Map) {
+Game::Game(std::string Map) :knightRotation('d') {
 	map.CreateGame(Map, knight, enemies);
 	map.Print();
 }
@@ -94,10 +94,11 @@ void Game::MoveInDirection(std::shared_ptr<Character> &character, char direction
 	case 'e':
 		fireballPlace = GetFireballPos();//надо добавить для шара направление
 		if (std::make_pair(std::make_shared<Fireball>(Fireball(1, 2, '^', fireballPlace, knightRotation)), true).first->
-			Collision(*map.GetObject(fireballPlace.first, fireballPlace.second).get())) {
+			Collision(*map.GetObject(fireballPlace.first, fireballPlace.second).get()) == 1) {
 			fireballs.push_back(std::make_pair(std::make_shared<Fireball>(Fireball(1, 2, '^', fireballPlace, knightRotation)), true));
 			map.ChangeMap(fireballPlace.first, fireballPlace.second, fireballs.back().first);
 			mvaddch(fireballPlace.second, fireballPlace.first, '^');
+			refresh();
 		}
 		break;
 	default:
@@ -110,7 +111,7 @@ void Game::TryMove(std::shared_ptr<Character>& character, std::pair<int, int> ne
 	std::shared_ptr<GameObject> charToMove = map.GetObject(old_pos.first, old_pos.second);
 	std::shared_ptr<GameObject> charToButtle = map.GetObject(new_pos.first, new_pos.second);
 	auto way = charToMove->Collision(*charToButtle.get());
-	if (way == 1) {
+	if (way == 1) { //меняем местами 2 объекта
 		map.ChangeMap(old_pos.first, old_pos.second, charToButtle); //сюда просто пустое место
 		mvaddch(old_pos.second, old_pos.first, charToButtle->GetSym());
 		character->SetPos(new_pos.first, new_pos.second);
@@ -119,30 +120,29 @@ void Game::TryMove(std::shared_ptr<Character>& character, std::pair<int, int> ne
 		mvaddch(new_pos.second, new_pos.first, charToMove->GetSym());
 
 	}
-	else if (way == 2){ //knight eats zombie and goes to zombie pos
+	else if (way == 2){ //на позицию старого ставит ., передвигает мува в новую позицию
 		map.ChangeMap(old_pos.first, old_pos.second, std::dynamic_pointer_cast<GameObject>(std::make_shared<EmptySpace>(EmptySpace()))); //сюда просто пустое место
-		for (auto i = enemies.begin(); i != enemies.end(); i++) {
-			if (i->first == charToButtle) {
-				i->second = false;
-			}
-		}
+		ChangeDanger(charToMove, charToButtle);
 		mvaddch(old_pos.second, old_pos.first, '.');
 		character->SetPos(new_pos.first, new_pos.second);
 
 		map.ChangeMap(new_pos.first, new_pos.second, charToMove);
 		mvaddch(new_pos.second, new_pos.first, charToMove->GetSym());
 	}
-	else if (way == 3) { //zombie goes to knight and knight kill zombie and stays on his position
+	else if (way == 3) { //на старую позиция ставится точка и все
 		map.ChangeMap(old_pos.first, old_pos.second, std::dynamic_pointer_cast<GameObject>(std::make_shared<EmptySpace>(EmptySpace()))); //сюда просто пустое место
-		if (charToMove->GetSym() == 'z') {
-			ChangeEnemies(charToMove);
-		}
-		else {
-			ChangeFireballs(charToMove);
-		}
+		ChangeDanger(charToMove, charToButtle);
 		mvaddch(old_pos.second, old_pos.first, '.');
 	}
+	else if (way == 4) { //на оба места нужно поставить .
+		map.ChangeMap(old_pos.first, old_pos.second, std::dynamic_pointer_cast<GameObject>(std::make_shared<EmptySpace>(EmptySpace())));
+		map.ChangeMap(new_pos.first, new_pos.second, std::dynamic_pointer_cast<GameObject>(std::make_shared<EmptySpace>(EmptySpace())));
+		mvaddch(old_pos.second, old_pos.first, '.');
+		mvaddch(new_pos.second, new_pos.first, '.');
+		ChangeDanger(charToMove, charToButtle);
+	}
 	refresh();
+	//ничего не происзодит, все стоят, как стояли
 }
 
 void Game::ChangeEnemies(std::shared_ptr<GameObject> charToMove) {
@@ -158,6 +158,16 @@ void Game::ChangeFireballs(std::shared_ptr<GameObject> charToMove) {
 		if (i->first == charToMove) {
 			i->second = false;
 		}
+	}
+}
+void Game::ChangeDanger(std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2) {
+	if (obj1->GetSym() != '#' && obj1->GetSym() != 'P' && std::dynamic_pointer_cast<Character>(obj1)->GetHp() <= 0) {
+		ChangeEnemies(obj1);
+		ChangeFireballs(obj1);
+	}
+	if (obj2->GetSym() != '#' && obj2->GetSym() != 'P' && std::dynamic_pointer_cast<Character>(obj2)->GetHp() <= 0) {
+		ChangeEnemies(obj2);
+		ChangeFireballs(obj2);
 	}
 }
 

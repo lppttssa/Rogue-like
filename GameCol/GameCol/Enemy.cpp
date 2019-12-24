@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Knight.h"
+#include "Fireball.h"
 
 Enemy::Enemy(int hp, int damage, char sym, std::pair<int, int> c) : Character(hp, damage, sym, c) {}
 
@@ -56,5 +57,17 @@ int Enemy::Collision(Enemy& enemy) {
 }
 
 int Enemy::Collision(Fireball& fireball) {
-	return 0;
+	fireball.SetHp(0);
+	if (KillCharacter(fireball.GetDamage())) {
+		return 4;
+	}
+	return 3;
+}
+
+int Fireball::Collision(Enemy& enemy) {
+	SetHp(0);
+	if (enemy.KillCharacter(GetDamage())) {
+		return 4;
+	}
+	return 2;
 }
