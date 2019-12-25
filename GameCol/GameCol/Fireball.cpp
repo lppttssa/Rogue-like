@@ -14,11 +14,6 @@ int Fireball::Collision(EmptySpace& emptySpace) {
 	return 1;
 }
 
-int Fireball::Collision(Knight& knight) {
-	
-	return 0;
-}
-
 int Fireball::Collision(Princess& princess) {
 	return 0;
 }

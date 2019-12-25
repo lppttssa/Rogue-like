@@ -1,4 +1,5 @@
 #include "Knight.h"
+#include "Fireball.h"
 
 Knight::Knight(int hp, int damage, char sym, std::pair<int, int> c) : Character(hp, damage, sym, c) {}
 
@@ -27,5 +28,25 @@ int Knight::Collision(Princess& princess) {
 }
 
 int Knight::Collision(Fireball& fireball) {
-	return 0;
+	fireball.SetHp(0);
+	if (KillCharacter(fireball.GetDamage())) {
+		clear();
+		while (true) {
+			printw("LOSER");
+			refresh();
+		}
+	}
+	return 3;
+}
+
+int Fireball::Collision(Knight& knight) {
+	SetHp(0);
+	if (knight.KillCharacter(GetDamage())) {
+		clear();
+		while (true) {
+			printw("LOSER");
+			refresh();
+		}
+	}
+	return 2;
 }

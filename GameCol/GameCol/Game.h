@@ -11,11 +11,12 @@ class Game {
 	std::vector<std::pair<std::shared_ptr<Character>, bool>> enemies;
 	std::vector<std::pair<std::shared_ptr<Character>, bool>> fireballs;
 	char knightRotation;
-	std::pair<int, int> GetFireballPos();
+	std::pair<int, int> GetFireballPos(char, std::shared_ptr<Character>&);
 	void MoveFireballs();
 	void ChangeFireballs(std::shared_ptr<GameObject>);
 	void ChangeEnemies(std::shared_ptr<GameObject>);
 	void ChangeDanger(std::shared_ptr<GameObject>, std::shared_ptr<GameObject>);
+	void CreateFireball(char, std::shared_ptr<Character>&);
 public:
 	Game(std::string);
 	void Play();

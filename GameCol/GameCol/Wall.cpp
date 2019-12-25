@@ -1,4 +1,5 @@
 #include "Wall.h"
+#include "Fireball.h"
 
 Wall::Wall() : GameObject('#') {};
 
@@ -27,5 +28,6 @@ int Wall::Collision(Enemy& enemy) {
 }
 
 int Wall::Collision(Fireball& fireball) {
+	fireball.SetHp(0);
 	return 3;
 }

@@ -27,8 +27,7 @@ void Game::Move() {
 	}
 	MoveInDirection(knight, move);
 }
-
-void Game::MoveMonster() {
+	void Game::MoveMonster() { 
 	int i = 0;
 	for (i; i < enemies.size(); i++) {
 		if (!enemies[i].second) {
@@ -39,11 +38,15 @@ void Game::MoveMonster() {
 	}
 	for (auto i = enemies.begin(); i != enemies.end(); i++) {
 		char move = GetRandomMonsterMove();
-		MoveInDirection(i->first, move);
+		MoveInDirection(i->first, 'n');
+		CreateFireball('a', i->first);
+		if (std::dynamic_pointer_cast<GameObject>(i->first)->GetSym() == 'd' && move != 'n') {
+			CreateFireball(move, i->first);
+		}
 	}
 }
 
-void Game::MoveFireballs() {
+	void Game::MoveFireballs() {
 	int i = 0;
 	for (i; i < fireballs.size(); i++) {
 		if (!fireballs[i].second) {
@@ -76,7 +79,6 @@ char Game::GetRandomMonsterMove() {
 }
 
 void Game::MoveInDirection(std::shared_ptr<Character> &character, char direction) {
-	std::pair<int, int> fireballPlace = { 0,0 };
 	std::pair<int, int> place = character->GetPos();
 	switch (direction) {
 	case 'w':
@@ -92,14 +94,7 @@ void Game::MoveInDirection(std::shared_ptr<Character> &character, char direction
 		TryMove(character, std::make_pair(place.first + 1, place.second), place);
 		break;
 	case 'e':
-		fireballPlace = GetFireballPos();//надо добавить для шара направление
-		if (std::make_pair(std::make_shared<Fireball>(Fireball(1, 2, '^', fireballPlace, knightRotation)), true).first->
-			Collision(*map.GetObject(fireballPlace.first, fireballPlace.second).get()) == 1) {
-			fireballs.push_back(std::make_pair(std::make_shared<Fireball>(Fireball(1, 2, '^', fireballPlace, knightRotation)), true));
-			map.ChangeMap(fireballPlace.first, fireballPlace.second, fireballs.back().first);
-			mvaddch(fireballPlace.second, fireballPlace.first, '^');
-			refresh();
-		}
+		CreateFireball(knightRotation, knight);
 		break;
 	default:
 		printf("NO");
@@ -171,9 +166,9 @@ void Game::ChangeDanger(std::shared_ptr<GameObject> obj1, std::shared_ptr<GameOb
 	}
 }
 
-std::pair<int, int> Game::GetFireballPos() {
-	auto place = knight->GetPos();
-	switch (knightRotation) {
+std::pair<int, int> Game::GetFireballPos(char direction, std::shared_ptr<Character>& character) {
+	auto place = character->GetPos();
+	switch (direction) {
 	case 'w':
 		return std::make_pair(place.first, place.second - 1);
 	case 's':
@@ -182,5 +177,16 @@ std::pair<int, int> Game::GetFireballPos() {
 		return std::make_pair(place.first - 1, place.second);
 	case 'd':
 		return std::make_pair(place.first + 1, place.second);
+	}
+}
+
+void Game::CreateFireball(char direction, std::shared_ptr<Character>& character) {
+	auto fireballPlace = GetFireballPos(direction, character);//надо добавить для шара направление
+	if (std::make_pair(std::make_shared<Fireball>(Fireball(1, 2, '^', fireballPlace, direction)), true).first->
+		Collision(*map.GetObject(fireballPlace.first, fireballPlace.second).get()) == 1) {
+		fireballs.push_back(std::make_pair(std::make_shared<Fireball>(Fireball(1, 2, '^', fireballPlace, direction)), true));
+		map.ChangeMap(fireballPlace.first, fireballPlace.second, fireballs.back().first);
+		mvaddch(fireballPlace.second, fireballPlace.first, '^');
+		refresh();
 	}
 }

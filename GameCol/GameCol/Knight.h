@@ -3,7 +3,7 @@
 #include "curses.h"
 #include "Character.h"
 
-class Enemy;
+class Fireball;
 class Knight : public Character {
 public:
 	Knight(int hp, int damage, char sym, std::pair<int, int> c);

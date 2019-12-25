@@ -1,6 +1,17 @@
 #include "Game.h"
 
 int main(){
-	Game game("Map.txt");
+	initscr();
+	printw("Would you like to play a game?\n");
+	refresh();
+	/*char choice = getch();
+	if (choice == 'y') {
+		noecho();
+		clear();
+		Game game("simple.txt");
+		game.Play();
+	}*/
+	clear();
+	Game game("simple.txt");
 	game.Play();
 }
