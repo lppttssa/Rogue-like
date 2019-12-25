@@ -37,6 +37,9 @@ void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight, std::vec
 				enemies.push_back(std::make_pair(std::make_shared<Enemy>(Enemy(10, 5, 'd', { i, count })), true));
 				map[count].push_back(std::dynamic_pointer_cast<GameObject>(enemies.back().first));
 				break;
+			case '+':
+				map[count].push_back(std::dynamic_pointer_cast<GameObject>(std::make_shared<AidKit>(AidKit())));
+				break;
 			}	
 		}
 		count++;
@@ -46,6 +49,7 @@ void Map::CreateGame(std::string m, std::shared_ptr<Character> &knight, std::vec
 
 void Map::Print() {
 	initscr();
+	//nodelay(stdscr, TRUE);
 	for (auto i : map) {
 		for (auto j : i) {
 			printw("%c", j->GetSym());

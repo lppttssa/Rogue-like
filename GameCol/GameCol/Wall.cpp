@@ -31,3 +31,7 @@ int Wall::Collision(Fireball& fireball) {
 	fireball.SetHp(0);
 	return 3;
 }
+
+int Wall::Collision(AidKit& aidKit) {
+	return 0;
+}

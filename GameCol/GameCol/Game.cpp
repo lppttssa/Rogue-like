@@ -18,18 +18,23 @@ void Game::Play() {
 
 void Game::Move() {
 	noecho();
-	//std::this_thread::sleep_for(std::chrono::milliseconds(200));
-	//nodelay(stdscr, TRUE);
+	
 	char move;
 	if ((move = getch()) == ERR) {
-		move = 'n';
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	}
-	else if (move != 'e'){
-		knightRotation = move;
+	else {
+		if (move != 'e') {
+			knightRotation = move;
+		}
+
+		MoveInDirection(knight, move); 
+		refresh();
 	}
-	MoveInDirection(knight, move);
+
 }
 	void Game::MoveMonster() { //поменяла с рабочей версии
+
 	int i = 0;
 	for (i; i < enemies.size();) {
 		if (!enemies[i].second) {
@@ -41,7 +46,7 @@ void Game::Move() {
 	}
 	for (auto i = enemies.begin(); i != enemies.end(); i++) {
 		char move = GetRandomMonsterMove();
-		MoveInDirection(i->first, move);
+		MoveInDirection(i->first, 'a');
 		if (std::dynamic_pointer_cast<GameObject>(i->first)->GetSym() == 'd' && move != 'n') {
 			static std::default_random_engine rand(time(NULL));
 			std::uniform_int_distribution<int> r(0, 3);
@@ -163,11 +168,11 @@ void Game::ChangeFireballs(std::shared_ptr<GameObject> charToMove) {
 	}
 }
 void Game::ChangeDanger(std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2) {
-	if (obj1->GetSym() != '#' && obj1->GetSym() != 'P' && std::dynamic_pointer_cast<Character>(obj1)->GetHp() <= 0) {
+	if (obj1->GetSym() != '#' && obj1->GetSym() != 'P' && obj1->GetSym() != '+' && std::dynamic_pointer_cast<Character>(obj1)->GetHp() <= 0) {
 		ChangeEnemies(obj1);
 		ChangeFireballs(obj1);
 	}
-	if (obj2->GetSym() != '#' && obj2->GetSym() != 'P' && std::dynamic_pointer_cast<Character>(obj2)->GetHp() <= 0) {
+	if (obj2->GetSym() != '#' && obj2->GetSym() != 'P' && obj2->GetSym() != '+' && std::dynamic_pointer_cast<Character>(obj2)->GetHp() <= 0) {
 		ChangeEnemies(obj2);
 		ChangeFireballs(obj2);
 	}

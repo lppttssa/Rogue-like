@@ -50,3 +50,7 @@ int Fireball::Collision(Knight& knight) {
 	}
 	return 2;
 }
+
+int Knight::Collision(AidKit& aidKit) {
+	return 0;
+}

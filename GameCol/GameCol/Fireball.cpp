@@ -27,3 +27,7 @@ int Fireball::Collision(Fireball& fireball) {
 char Fireball::GetDir() {
 	return way;
 }
+
+int Fireball::Collision(AidKit& aidKit) {
+	return 3;
+}

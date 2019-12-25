@@ -33,3 +33,7 @@ int Princess::Collision(Enemy& enemy) {
 int Princess::Collision(Fireball& fireball) {
 	return 3;
 }
+
+int Princess::Collision(AidKit& aidKit) {
+	return 0;
+}

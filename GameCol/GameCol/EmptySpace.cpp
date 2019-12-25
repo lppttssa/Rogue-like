@@ -29,3 +29,6 @@ int EmptySpace::Collision(Enemy& enemy) {
 int EmptySpace::Collision(Fireball& fireball) {
 	return 1;
 }
+int EmptySpace::Collision(AidKit& aidKit) {
+	return 0;
+}

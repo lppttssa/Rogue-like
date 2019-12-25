@@ -71,3 +71,7 @@ int Fireball::Collision(Enemy& enemy) {
 	}
 	return 2;
 }
+
+int Enemy::Collision(AidKit& aidKit) {
+	return 0;
+}

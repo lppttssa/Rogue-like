@@ -16,4 +16,5 @@ public:
 	int Collision(EmptySpace& emptySpace) override;
 	int Collision(Princess& princess) override;
 	int Collision(Fireball& fireball) override;
+	int Collision(AidKit& aidKit) override;
 };

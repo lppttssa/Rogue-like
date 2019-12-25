@@ -12,6 +12,7 @@
 #include "Enemy.h"
 #include "Fireball.h"
 #include "curses.h"
+#include "AidKit.h"
 
 class Map {
 	std::vector<std::vector<std::shared_ptr<GameObject>>> map = 
