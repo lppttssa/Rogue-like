@@ -1,5 +1,6 @@
 #include <random>
-#include <time.h>
+#include <thread>       
+#include <chrono>
 #include "Game.h"
 
 Game::Game(std::string Map) :knightRotation('d') {
@@ -17,6 +18,7 @@ void Game::Play() {
 
 void Game::Move() {
 	noecho();
+	//std::this_thread::sleep_for(std::chrono::milliseconds(200));
 	//nodelay(stdscr, TRUE);
 	char move;
 	if ((move = getch()) == ERR) {
@@ -27,32 +29,37 @@ void Game::Move() {
 	}
 	MoveInDirection(knight, move);
 }
-	void Game::MoveMonster() { 
+	void Game::MoveMonster() { //поменяла с рабочей версии
 	int i = 0;
-	for (i; i < enemies.size(); i++) {
+	for (i; i < enemies.size();) {
 		if (!enemies[i].second) {
-			enemies[i] = enemies.back();
-			enemies.pop_back();
-			i--;
+			enemies.erase(enemies.begin() + i);
+		}
+		else {
+			i++;
 		}
 	}
 	for (auto i = enemies.begin(); i != enemies.end(); i++) {
 		char move = GetRandomMonsterMove();
-		MoveInDirection(i->first, 'n');
-		CreateFireball('a', i->first);
+		MoveInDirection(i->first, move);
 		if (std::dynamic_pointer_cast<GameObject>(i->first)->GetSym() == 'd' && move != 'n') {
-			CreateFireball(move, i->first);
+			static std::default_random_engine rand(time(NULL));
+			std::uniform_int_distribution<int> r(0, 3);
+			if (r(rand) == 1) {
+				CreateFireball(move, i->first);
+			}
 		}
 	}
 }
 
 	void Game::MoveFireballs() {
 	int i = 0;
-	for (i; i < fireballs.size(); i++) {
+	for (i; i < fireballs.size();) {
 		if (!fireballs[i].second) {
-			fireballs[i] = fireballs.back();
-			fireballs.pop_back();
-			i--;
+			fireballs.erase(fireballs.begin() + i);
+		}
+		else {
+			i++;
 		}
 	}
 	for (auto i = fireballs.begin(); i != fireballs.end(); i++) {

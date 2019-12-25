@@ -12,6 +12,6 @@ int main(){
 		game.Play();
 	}*/
 	clear();
-	Game game("simple.txt");
+	Game game("Map.txt");
 	game.Play();
 }

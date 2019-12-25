@@ -19,7 +19,9 @@ int Fireball::Collision(Princess& princess) {
 }
 
 int Fireball::Collision(Fireball& fireball) {
-	return 0;
+	SetHp(0);
+	fireball.SetHp(0);
+	return 4;
 }
 
 char Fireball::GetDir() {
