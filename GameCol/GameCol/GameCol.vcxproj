@@ -165,9 +165,13 @@
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="AidKit.txt" />
+    <Text Include="Dragon.txt" />
+    <Text Include="Knight.txt" />
     <Text Include="Map.txt" />
     <Text Include="Map_easy.txt" />
     <Text Include="simple.txt" />
+    <Text Include="Zombie.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

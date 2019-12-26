@@ -2,7 +2,11 @@
 #include "Knight.h"
 #include "Fireball.h"
 
-AidKit::AidKit() : GameObject('+') {};
+AidKit::AidKit(int h) : GameObject('+'), hp(h) {};
+
+int AidKit::GetAidHp() {
+	return hp;
+}
 
 int AidKit::Collision(Wall& wall) {
 	return 0;
@@ -17,8 +21,11 @@ int AidKit::Collision(EmptySpace& emptySpace) {
 }
 
 int AidKit::Collision(Knight& knight) {
-	knight.SetHp(knight.GetHp() + 2);
-	return 2; //тут поменять
+	knight.SetHp(knight.GetHp() + GetAidHp());
+	if (knight.GetHp() > knight.GetMaxHp()) {
+		knight.SetHp(knight.GetMaxHp());
+	}
+	return 2; 
 }
 
 int AidKit::Collision(Princess& princess) {

@@ -5,8 +5,10 @@
 
 class Fireball;
 class Knight : public Character {
+	int max_hp;
 public:
-	Knight(int hp, int damage, char sym, std::pair<int, int> c);
+	Knight(int hp, int damage, int max_hp,char sym, std::pair<int, int> c);
+	int GetMaxHp();
 
 	int Collision(Enemy& enemy) override;
 	int Collision(Knight& knight) override;

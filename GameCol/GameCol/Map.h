@@ -16,11 +16,13 @@
 
 class Map {
 	std::vector<std::vector<std::shared_ptr<GameObject>>> map = 
-		std::vector<std::vector<std::shared_ptr<GameObject>>> (33);
-
+		std::vector<std::vector<std::shared_ptr<GameObject>>> (1);
+	Enemy CreateEnemy(std::string, int, int);
+	Knight CreateKnight(std::string, int, int);
+	AidKit CreateAidKit(std::string);
 public:
 	Map();
-
+	int GetSize();
 	void CreateGame(std::string, std::shared_ptr<Character>&, std::vector<std::pair<std::shared_ptr<Character>, bool>>&);
 	void Print();
 	std::shared_ptr<GameObject> GetObject(int, int);

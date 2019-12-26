@@ -2,8 +2,10 @@
 #include "GameObject.h"
 
 class AidKit : public GameObject {
+	int hp;
 public:
-	AidKit();
+	AidKit(int);
+	int GetAidHp();
 	int Collision(Enemy& enemy) override;
 	int Collision(Wall& wall) override;
 	int Collision(GameObject& gameObj) override;

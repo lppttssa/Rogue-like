@@ -3,6 +3,7 @@
 #include <map>
 #include <chrono>
 #include <ctime>
+#include <fstream>
 #include "Map.h"
 
 class Game {
@@ -17,6 +18,7 @@ class Game {
 	void ChangeEnemies(std::shared_ptr<GameObject>);
 	void ChangeDanger(std::shared_ptr<GameObject>, std::shared_ptr<GameObject>);
 	void CreateFireball(char, std::shared_ptr<Character>&);
+	void InitScreen();
 public:
 	Game(std::string);
 	void Play();

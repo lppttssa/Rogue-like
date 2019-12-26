@@ -91,5 +91,17 @@
     <Text Include="Map.txt" />
     <Text Include="Map_easy.txt" />
     <Text Include="simple.txt" />
+    <Text Include="Knight.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="Zombie.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="Dragon.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="AidKit.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>

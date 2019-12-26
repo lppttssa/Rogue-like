@@ -1,7 +1,11 @@
 #include "Knight.h"
 #include "Fireball.h"
 
-Knight::Knight(int hp, int damage, char sym, std::pair<int, int> c) : Character(hp, damage, sym, c) {}
+Knight::Knight(int hp, int damage, int mh, char sym, std::pair<int, int> c) : Character(hp, damage, sym, c), max_hp(mh) {}
+
+int Knight::GetMaxHp() {
+	return max_hp;
+}
 
 int Knight::Collision(Wall& wall) {
 	return 0;

@@ -2,13 +2,15 @@
 #include <thread>       
 #include <chrono>
 #include "Game.h"
+#include "Knight.h"
 
 Game::Game(std::string Map) :knightRotation('d') {
 	map.CreateGame(Map, knight, enemies);
 	map.Print();
 }
 
-void Game::Play() {
+void Game::Play() {	
+	InitScreen();
 	while (true) {
 		Move();
 		MoveMonster();
@@ -33,7 +35,7 @@ void Game::Move() {
 	}
 
 }
-	void Game::MoveMonster() { //поменяла с рабочей версии
+	void Game::MoveMonster() { 
 
 	int i = 0;
 	for (i; i < enemies.size();) {
@@ -46,7 +48,7 @@ void Game::Move() {
 	}
 	for (auto i = enemies.begin(); i != enemies.end(); i++) {
 		char move = GetRandomMonsterMove();
-		MoveInDirection(i->first, 'a');
+		MoveInDirection(i->first, move);
 		if (std::dynamic_pointer_cast<GameObject>(i->first)->GetSym() == 'd' && move != 'n') {
 			static std::default_random_engine rand(time(NULL));
 			std::uniform_int_distribution<int> r(0, 3);
@@ -68,7 +70,7 @@ void Game::Move() {
 		}
 	}
 	for (auto i = fireballs.begin(); i != fireballs.end(); i++) {
-		MoveInDirection(i->first, std::dynamic_pointer_cast<Fireball>(i->first)->GetDir());//надо понять,куда идти фаерболлом
+		MoveInDirection(i->first, std::dynamic_pointer_cast<Fireball>(i->first)->GetDir());
 	}
 }
 
@@ -109,7 +111,6 @@ void Game::MoveInDirection(std::shared_ptr<Character> &character, char direction
 		CreateFireball(knightRotation, knight);
 		break;
 	default:
-		printf("NO");
 		break;
 	}
 }
@@ -201,4 +202,52 @@ void Game::CreateFireball(char direction, std::shared_ptr<Character>& character)
 		mvaddch(fireballPlace.second, fireballPlace.first, '^');
 		refresh();
 	}
+}
+
+Fireball Game::CreateFireball(std::string source, int x, int y, int dir) {
+	std::ifstream file;
+	std::vector<std::string> fireball;
+
+	file.open(source);
+	if (file.fail()) {
+		exit(1);
+	}
+
+	std::string line;
+
+	while (getline(file, line)) {
+		fireball.push_back(line);
+	}
+	return Fireball(atoi(fireball[0].c_str()), atoi(fireball[1].c_str()), fireball[2][0], { x, y }, dir);
+}
+
+void Game::InitScreen() {
+	std::ifstream file;
+	mvaddstr(0, map.GetSize() + 15, "WELLCOME TO ROGUE-LIKE GAME!!");
+	mvaddstr(1, map.GetSize() + 4, "YOUR MAIN GOAL IS TO REACH YOUR BEAUTIFULL PRINCESS!!");
+	mvaddstr(2, map.GetSize() + 23, "Characters:");
+	mvaddstr(3, map.GetSize() + 19, "hp:");
+	mvaddstr(3, map.GetSize() + 33, "damage:");
+
+	mvaddstr(4, map.GetSize() + 10, "Knight:");
+	mvaddstr(4, map.GetSize() + 19, std::to_string(knight->GetHp()).c_str());
+	mvaddstr(4, map.GetSize() + 33, std::to_string(knight->GetDamage()).c_str());
+
+	mvaddstr(5, map.GetSize() + 10, "Zombie:");
+	file.open("Zombie.txt");
+	std::string line;
+	getline(file, line);
+	mvaddstr(5, map.GetSize() + 19, line.c_str());
+	getline(file, line);
+	mvaddstr(5, map.GetSize() + 33, line.c_str());
+	file.close();
+
+	mvaddstr(6, map.GetSize() + 10, "Dragon:");
+	file.open("Dragon.txt");
+	getline(file, line);
+	mvaddstr(6, map.GetSize() + 19, line.c_str());
+	getline(file, line);
+	mvaddstr(6, map.GetSize() + 33, line.c_str());
+	file.close();
+	refresh();
 }
